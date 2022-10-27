@@ -15,11 +15,12 @@ As a movie maniac,
     - `scrape.py`: scrape down the information I needed douban
     - `upload.py`: upload the film info into my notion database
   - Requirement: python 3, pip install requests & beautifulsoups & lxml
-  - 安装python3环境
   
 The `main.exe` itself acts as a full ETL pipeline with data scraping, cleaning, and loading to Notion. 
 
 I chose Notion as my primary database as Notion is easier for personal knowledge management.
+
+The Notion database can be exported into csv file for future analysis.
 
 The complete table includes the following features:
 - 'movie_title'
@@ -37,16 +38,30 @@ The Notion Database looks like:
 
 !['notion database'](https://github.com/shaw6741/movie-database/blob/master/images/notion_preview.jpg)
 
-## Combine douban & IMDb
+## Combine douban & IMDb - ETL for Larger Database
 This is to enlarge my database with film staff's info.
 
-Data was extracted using both imdb Dataset [Cinemagoer](https://imdbpy.readthedocs.io/en/latest/index.html) and [this Chinese API](https://github.com/iiiiiii1/douban-imdb-api).
-
-Python was used for extraction, data cleaning, and normalizing tables to prepare them for relational database.
-
-After merging them based on imdbID, I created the following database with SQL.
-
+First, I created a database schema:
 !['schema'](https://github.com/shaw6741/movie-database/blob/master/images/my%20schema.png)
+
+### Extraction
+1. [IMDB Dataset](https://www.imdb.com/interfaces/)
+1. Python package: [Cinemagoer](https://imdbpy.readthedocs.io/en/latest/index.html)
+2. A [Chinese API](https://github.com/iiiiiii1/douban-imdb-api) that can fetch IMDB rating, IMDB info, Rotten Tomatoes Rating
+
+Cinemagoer and API are good tools to get updated information on new films. Each time I finished watching a film, I'll just use the API and Cinemagoer to add my data record.
+
+### Transform (with Python)
+1. `convert.py`: clean the IMDB dataset, delete some unwanted data, normalize it based on my schema by seperating original tables
+2. After which, the desired set of tables are output as tab-separate-value (tsv) files.
+
+
+### Load (with MySQL)
+1. `create.sql`: create tables
+2. `load.sql`: load the tsv file into tables
+3. `constraints.sql`: add constraints
+4. `indexing.sql`: add indexes
+
 
 ## My Watching Histories Dashboard (with Tableau)
 
@@ -59,7 +74,7 @@ I used tableau to create a simple dashboard of monthly watching histories. There
 - How much time I've spent watching movies in the past week & how many movies you've watched in total
 - The percentage of time I spent on TV shows and movies.
 
-['My Dashboard'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_dashboard.jpg)
+!['My Dashboard'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_dashboard.jpg)
 
 Simple but useful but totally meet my needs:
 - As long as time allows, I hope I can maintain a certain amount of film watching so that I can continue to learn from new films.
@@ -70,9 +85,9 @@ Also created some other sheets:
 - watching history by country
 - watching history by release year
 
-['by country'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_country.jpg)
+!['by country'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_country.jpg)
 
-['by release year'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_releaseyear.jpg)
+!['by release year'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_releaseyear.jpg)
 
 This tableau is for illustration only and does not contain the full dataset. 
 
