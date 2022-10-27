@@ -70,9 +70,9 @@ Also created some other sheets:
 - watching history by country
 - watching history by release year
 
-['by country']([https://github.com/shaw6741/movie-database/blob/master/images/tableau_dashboard.jpg](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_country.jpg))
+['by country'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_country.jpg)
 
-['by release year']([https://github.com/shaw6741/movie-database/blob/master/images/tableau_dashboard.jpg](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_releaseyear.jpg))
+['by release year'](https://github.com/shaw6741/movie-database/blob/master/images/tableau_sheet_history_by_releaseyear.jpg)
 
 This tableau is for illustration only and does not contain the full dataset. 
 
